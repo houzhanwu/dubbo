@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/spring.log}"/>
+	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />		
+	</root>
+	<springProfile name="test, prod">
+		<springProperty name="LOG_MAX_FILE_SIZE" source="logging.max-file-size"
+			defaultValue="10MB" />		
+				<springProperty name="LOG_FILE_NAME" source="logging.file" />		
+		<!--<include resource="org/springframework/boot/logging/logback/file-appender.xml" 
+			/> -->
+		<appender name="FILE"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<encoder>
+				<pattern>${FILE_LOG_PATTERN}</pattern>
+			</encoder>
+
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<fileNamePattern>log/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log
+				</fileNamePattern>
+				<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+					<maxFileSize>${LOG_MAX_FILE_SIZE}</maxFileSize>
+				</timeBasedFileNamingAndTriggeringPolicy>
+				<maxHistory>30</maxHistory>
+			</rollingPolicy>
+		</appender>
+	</springProfile>
+	<springProfile name="dev">
+		<root level="INFO">
+			<appender-ref ref="CONSOLE" />
+		</root>
+	</springProfile>
+
+	<springProfile name="test, prod">
+		<root level="INFO">
+			<appender-ref ref="FILE" />
+		</root>
+	</springProfile>
+
+</configuration>

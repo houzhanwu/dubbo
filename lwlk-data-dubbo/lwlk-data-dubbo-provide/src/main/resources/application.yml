@@ -1,0 +1,22 @@
+dubbo :  
+  protocol :       
+    prot : 20888
+    name  : dubbo
+  application :   
+    name :  lwlk-data-dubbo-huangsi
+  registry :  
+    address : zookeeper://dti01:2181  
+  packageName : cn.cttic.service 
+  
+server :  
+  port : 8088
+spring.profiles.default: dev
+logging.level.root: WARN
+logging.level.cn.cttic: debug
+
+
+logging:
+  path: ./
+  file: lwlk-dubbo-provide-file
+  max-file-size: 200MB
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<!-- 文件輸出 -->
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<encoder>
+			<pattern>
+				<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 %logger{96}:哪个类，%line:第几行-->
+				[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n
+			</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily 配置日志所生成的目录以及生成文件名的规则 -->
+			<fileNamePattern>logs/lwlk-data-storage-%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200 MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- 如果按天来回滚，则最大保存时间为1天，1天之前的都将被清理掉 -->  
+            <maxHistory>30</maxHistory> 
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>@log.file.level@</level>
+		</filter>
+		<!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
+		<prudent>true</prudent>
+	</appender>
+
+
+	<!-- 控制台輸出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n
+			</pattern>
+			<charset>UTF-8</charset> <!-- 此处设置字符集 -->
+		</encoder>
+		<!-- Only log level DEBUG and above -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>@log.console.level@</level>
+		</filter>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="file" />
+		<appender-ref ref="console" />
+	</root>
+	
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+</configuration>

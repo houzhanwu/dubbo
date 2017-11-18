@@ -1,0 +1,15 @@
+kafka:
+    binder:
+      brokers: 172.16.111.1:9092,172.16.111.2:9092,172.16.111.3:9092,172.16.111.4:9092,172.16.111.5:9092
+    group: HYPT_POSITION_01,LWLK_POSITION_01
+
+publisher.tcp.hostName: 172.16.111.6
+publisher.tcp.port: 6666
+
+subscrber.tcp.hostName: 10.1.88.95
+subscrber.tcp.port: 5555
+
+userinfoRedisTemplate.hostName: 172.16.111.6
+userinfoRedisTemplate.port: 6381         
+userinfoRedisTemplate.timeout: 5000
+ 

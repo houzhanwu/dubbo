@@ -1,0 +1,6 @@
+logging.config: classpath:logback.xml
+server.port: 8080
+#spring.jackson.serialization.indent_output: true
+#endpoints.health.sensitive: false
+#spring.application.name: testweb
+#spring.boot.admin.url: http://127.0.0.1:8080

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!--  自动生成ibatis 的modelxml -->
+	<classPathEntry
+		location="D:/ojdbc6.jar"/>
+	<!-- 用来指定产生一组对象的环境，多个数据库，就建立多个 context。 -->
+	<context id="context">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 连接数据库 -->
+		<jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+		connectionURL="jdbc:oracle:thin:@192.168.180.224:1521:orcl" userId="iisp" password="cttic2016" />
+			
+		<!-- 生成model 每次生成不用改 -->
+		<javaModelGenerator targetPackage="cn.cttic.model.test"
+			targetProject="lwlk-data-dubbo-comm" />
+			
+		<!-- 生成xml  只改最后一层目录shiftinfo  stationinfo-->
+		<sqlMapGenerator targetPackage="cn.cttic.dao.mybatis"
+			targetProject="lwlk-data-dubbo-provide" />
+			
+		<!-- 生成dao 只改最后一层目录shiftinfo  stationinfo-->
+		<javaClientGenerator targetPackage="cn.cttic.dao.mybatis"
+			targetProject="lwlk-data-dubbo-provide" type="XMLMAPPER" />
+			
+		<!-- <table schema="" tableName="DEPT"> -->
+		<!-- 去除一列，这样 PASSWORD这列就不会生成 -->
+		<!-- <ignoreColumn column="PASSWORD"/> -->
+		<!-- 将数据库字段对应成POJO里面的字段。 -->
+		<!-- <columnOverride column="USERID" property="userid" /> -->
+		<!-- </table> -->
+		
+		
+		
+		<!-- tableName 表名      domainObjectName model名  -->
+ 		<table schema="" tableName="OFFLINETICKETS" domainObjectName="OfflineInfo"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true">
+		</table>
+		
+		
+	</context>
+</generatorConfiguration>

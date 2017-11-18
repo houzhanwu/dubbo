@@ -1,0 +1,84 @@
+package com.csht.lwlkdatasubscribe;
+
+option java_package = "com.csht.lwlkdatasubscribe.utils";
+option java_outer_classname = "CTTICZMQSUB";
+
+//	订阅多辆车辆信息
+message SubMultiVehicle{
+	repeated SubVehicle subvehicle = 1;
+}
+
+
+//	订阅车辆信息
+message SubVehicle{
+	required string vehicle_no = 1;
+	required string vehicle_color =	2;
+	required uint32	sub_cmd	= 3;		//	1	订阅车辆信息	2	取消订阅车辆信息
+	required string pub_topic = 4;		//	车辆上行数据主题
+}
+// 车辆定位信息数据体
+message Gnss{
+	// 加密标识
+    optional int32 Encrypt       		 = 1;
+	// 定位时间 
+    required string PositionTime 		 = 2;
+	// 经度
+    required uint32 Lon      			 = 3;
+	// 纬度
+    required uint32 Lat          		 = 4;
+	// 车载终端速度
+    optional uint32 Vec1         		 = 5;
+	// 行驶记录速度
+    optional uint32 Vec2   		 		 = 6;
+	// 总里程
+    optional uint32 Vec3       	 		 = 7;
+	// 方向
+    optional uint32 Direction    		 = 8;
+	// 海拔高度
+	optional int32 Altitude		 		 = 9;
+	// 车辆状态
+    optional uint32 State	     		 = 10;
+	// 报警状态
+    optional uint32 Alarm        		 = 11;
+}
+// 车辆定位数据
+message VehiclePosition{
+	// 车辆归属省行政区域编码
+	required uint32 AccessCode   		 = 1;
+	// 车辆归属地市编码
+	required uint32 City				 = 2;
+	// 车辆当前归属省行政区域编码
+	optional uint32 CurAccessCode		 = 3;
+	// 车辆归属运输行业编码
+    optional uint32 Trans        		 = 4;
+	// 更新时间
+    required uint64 UpdateTime   		 = 5;
+	// 车牌号码
+    required string VehicleNo    		 = 6;
+	// 车牌颜色
+    optional int32 PlateColor    		 = 7;
+	// 车辆动态数据
+	required Gnss gnss	         		 = 8;
+	// 备注
+	optional string Reserved     		 = 9;
+	
+}
+//	订阅平台交互信息
+message SubPlatform
+{
+	required string upordown = 1;	//上级平台还是下级平台	1	上级平台	2	下级平台
+	required uint32	sub_cmd =	2;		//	1	订阅平台信息	2	取消订阅平台信息
+	required string pub_topic =	3;		//	平台上行数据主题	
+}
+//	订阅多个平台交互信息
+message SubMultiPlatform
+{
+	repeated SubPlatform subplatform	=	1;
+}
+message SubPlatformOnline
+{
+	required string upordown		=	1;		//	上级平台还是下级平台	1	上级平台	2	下级平台
+	required uint32 access_code		=	2;		//	平台接入码
+	required string pub_topic		=	3;		//	平台状态发布主题
+}
+
